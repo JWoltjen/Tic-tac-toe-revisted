@@ -22,7 +22,8 @@ function startGame() {
 		cells[i].innerText = '';
 		cells[i].style.removeProperty('background-color');
 		cells[i].addEventListener('click', turnClick, false);
-	}
+    }
+   turn([0,1,2,3,4,5,7,8,9][Math.floor(Math.random()*9)], aiPlayer)
 }
 
 function turnClick(square) {
@@ -69,7 +70,7 @@ function declareWinner(who) {
 }
 
 function emptySquares() {
-	return origBoard.filter(s => typeof s == 'number');
+	return origBoard.filter(squares => typeof squares == 'number');
 }
 
 function bestSpot() {
@@ -79,7 +80,7 @@ function bestSpot() {
 function checkTie() {
 	if (emptySquares().length == 0) {
 		for (var i = 0; i < cells.length; i++) {
-			cells[i].style.backgroundColor = "green";
+			cells[i].style.backgroundColor = "red";
 			cells[i].removeEventListener('click', turnClick, false);
 		}
 		declareWinner("Tie Game!")
