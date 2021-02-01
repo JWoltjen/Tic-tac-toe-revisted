@@ -12,17 +12,55 @@ const winCombos = [
 	[6, 4, 2]
 ]
 
+const button1 = document.getElementById('player1')
+const button2 = document.getElementById('player2')
+const button3 = document.getElementById('replay')
+button1.addEventListener('click', startGame)
+button2.addEventListener('click', startAiGame)
+button3.addEventListener('click', restart)
+
 const cells = document.querySelectorAll('.cell');
-startGame();
+
+function hideModal() {
+    document.querySelector('.startgame').classList.add('hidden')
+}
+
+function showModal() {
+    document.querySelector('.startgame').classList.remove('hidden')
+}
+
+function restart() {
+    document.querySelector('.endgame').classList.add('hidden')
+    showModal(); 
+    origBoard = Array.from(Array(9).keys());
+	for (var i = 0; i < cells.length; i++) {
+		cells[i].innerText = '';
+		cells[i].style.removeProperty('background-color');
+		cells[i].addEventListener('click', turnClick, false);
+    }
+}
 
 function startGame() {
-	document.querySelector(".endgame").style.display = "none";
+    showModal(); 
 	origBoard = Array.from(Array(9).keys());
 	for (var i = 0; i < cells.length; i++) {
 		cells[i].innerText = '';
 		cells[i].style.removeProperty('background-color');
 		cells[i].addEventListener('click', turnClick, false);
-	}
+    }
+    hideModal(); 
+}
+
+function startAiGame() {
+    showModal(); 
+	origBoard = Array.from(Array(9).keys());
+	for (var i = 0; i < cells.length; i++) {
+		cells[i].innerText = '';
+		cells[i].style.removeProperty('background-color');
+		cells[i].addEventListener('click', turnClick, false);
+    }
+   hideModal(); 
+   turn([0,1,2,3,4,5,7,8,9][Math.floor(Math.random()*9)], aiPlayer)
 }
 
 function turnClick(square) {
@@ -64,12 +102,12 @@ function gameOver(gameWon) {
 }
 
 function declareWinner(who) {
-	document.querySelector(".endgame").style.display = "block";
+	document.querySelector(".endgame").classList.remove('hidden')
 	document.querySelector(".endgame .text").innerText = who;
 }
 
 function emptySquares() {
-	return origBoard.filter(s => typeof s == 'number');
+	return origBoard.filter(squares => typeof squares == 'number');
 }
 
 function bestSpot() {
@@ -79,7 +117,7 @@ function bestSpot() {
 function checkTie() {
 	if (emptySquares().length == 0) {
 		for (var i = 0; i < cells.length; i++) {
-			cells[i].style.backgroundColor = "green";
+			cells[i].style.backgroundColor = "red";
 			cells[i].removeEventListener('click', turnClick, false);
 		}
 		declareWinner("Tie Game!")

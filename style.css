@@ -35,11 +35,29 @@ table tr td:last-child {
   border-right: 0;
 }
 
-.endgame {
+.hidden {
   display: none;
+}
+
+.endgame {
   width: 200px;
   top: 120px;
   background-color: rgba(205, 133, 63, 0.8);
+  position: absolute;
+  left: 50%;
+  margin-left: -100px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  text-align: center;
+  border-radius: 5px;
+  color: white;
+  font-size: 2em;
+}
+
+.startgame {
+  width: 200px;
+  top: 120px;
+  background-color: rgba(63, 200, 205, 0.8);
   position: absolute;
   left: 50%;
   margin-left: -100px;
