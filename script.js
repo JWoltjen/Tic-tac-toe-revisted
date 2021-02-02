@@ -1,6 +1,9 @@
 var origBoard;
 const huPlayer = 'O';
 const aiPlayer = 'X';
+let drawngames = 0; 
+let huPlayerwins = 0; 
+let aiPlayerwins = 0; 
 const winCombos = [
 	[0, 1, 2],
 	[3, 4, 5],
@@ -12,6 +15,10 @@ const winCombos = [
 	[6, 4, 2]
 ]
 
+
+let playerWins = document.getElementById('huwins')
+let aiWins = document.getElementById('aiwins')
+let draws = document.getElementById('draws')
 const button1 = document.getElementById('player1')
 const button2 = document.getElementById('player2')
 const button3 = document.getElementById('replay')
@@ -21,12 +28,18 @@ button3.addEventListener('click', restart)
 
 const cells = document.querySelectorAll('.cell');
 
+
+
 function hideModal() {
     document.querySelector('.startgame').classList.add('hidden')
 }
-
 function showModal() {
     document.querySelector('.startgame').classList.remove('hidden')
+}
+
+function displayRecord() {
+    draws.innerText = drawngames
+    aiWins.innerText = aiPlayerwins
 }
 
 function restart() {
@@ -38,6 +51,7 @@ function restart() {
 		cells[i].style.removeProperty('background-color');
 		cells[i].addEventListener('click', turnClick, false);
     }
+    displayRecord()
 }
 
 function startGame() {
@@ -83,7 +97,7 @@ function checkWin(board, player) {
 	let gameWon = null;
 	for (let [index, win] of winCombos.entries()) {
 		if (win.every(elem => plays.indexOf(elem) > -1)) {
-			gameWon = {index: index, player: player};
+            gameWon = {index: index, player: player};
 			break;
 		}
 	}
@@ -91,14 +105,16 @@ function checkWin(board, player) {
 }
 
 function gameOver(gameWon) {
+    gameWon.player == huPlayer ? huPlayerwins++ : aiPlayerwins++
+    gameWon.player == huPlayer ? localStorage.setItem('huWins', JSON.stringify(huPlayerwins)) : localStorage.setItem('aiWins', JSON.stringify(aiPlayerwins))
 	for (let index of winCombos[gameWon.index]) {
 		document.getElementById(index).style.backgroundColor =
 			gameWon.player == huPlayer ? "blue" : "red";
 	}
 	for (var i = 0; i < cells.length; i++) {
 		cells[i].removeEventListener('click', turnClick, false);
-	}
-	declareWinner(gameWon.player == huPlayer ? "You win!" : "You lose.");
+    }
+    declareWinner(gameWon.player == huPlayer ? "You win!" : "You lose.");
 }
 
 function declareWinner(who) {
@@ -119,8 +135,11 @@ function checkTie() {
 		for (var i = 0; i < cells.length; i++) {
 			cells[i].style.backgroundColor = "red";
 			cells[i].removeEventListener('click', turnClick, false);
-		}
-		declareWinner("Tie Game!")
+        }
+        drawngames++
+        console.log("it's a tie")
+        localStorage.setItem('drawngames', JSON.stringify(drawngames))
+        declareWinner("Tie Game!")
 		return true;
 	}
 	return false;

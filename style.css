@@ -17,8 +17,6 @@ table {
   top: 50px;
 }
 
-/*this will eliminate the border for the cells*/
-
 table tr:first-child td {
   border-top: 0;
 }
