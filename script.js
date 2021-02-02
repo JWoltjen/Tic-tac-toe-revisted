@@ -15,6 +15,10 @@ const winCombos = [
 	[6, 4, 2]
 ]
 
+
+let playerWins = document.getElementById('huwins')
+let aiWins = document.getElementById('aiwins')
+let draws = document.getElementById('draws')
 const button1 = document.getElementById('player1')
 const button2 = document.getElementById('player2')
 const button3 = document.getElementById('replay')
@@ -34,8 +38,8 @@ function showModal() {
 }
 
 function displayRecord() {
-    console.log("drawngames", drawngames)
-    console.log("aiWins", aiPlayerwins)
+    draws.innerText = drawngames
+    aiWins.innerText = aiPlayerwins
 }
 
 function restart() {
