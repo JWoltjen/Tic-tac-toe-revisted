@@ -115,18 +115,11 @@ function gameOver(gameWon) {
 		cells[i].removeEventListener('click', turnClick, false);
     }
     declareWinner(gameWon.player == huPlayer ? "You win!" : "You lose.");
-
 }
 
 function declareWinner(who) {
 	document.querySelector(".endgame").classList.remove('hidden')
 	document.querySelector(".endgame .text").innerText = who;
-}
-
-function addScore(){
-    if(gameWon.player == huPlayer ? huPlayerwins++ : aiPlayerwins++)
-    localStorage.setItem('humanwins', JSON.stringify(huPlayerwins))
-    localStorage.setItem('aiwins', JSON.stringify(aiPlayerwins))
 }
 
 function emptySquares() {
@@ -142,10 +135,11 @@ function checkTie() {
 		for (var i = 0; i < cells.length; i++) {
 			cells[i].style.backgroundColor = "red";
 			cells[i].removeEventListener('click', turnClick, false);
-		}
-        declareWinner("Tie Game!")
+        }
         drawngames++
+        console.log("it's a tie")
         localStorage.setItem('drawngames', JSON.stringify(drawngames))
+        declareWinner("Tie Game!")
 		return true;
 	}
 	return false;
