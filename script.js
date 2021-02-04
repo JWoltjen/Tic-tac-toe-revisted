@@ -7,12 +7,51 @@ let aiPlayerwins = 0;
 const winCombos = [
 	[0, 1, 2],
 	[3, 4, 5],
-	[6, 7, 8],
-	[0, 3, 6],
-	[1, 4, 7],
-	[2, 5, 8],
-	[0, 4, 8],
-	[6, 4, 2]
+	// [6, 7, 8],
+	// [10,11,12],
+	// [13,14,15],
+	// [16,17,18],
+	// [20,21,22],
+	// [23,24,25],
+	// [26,27,28],
+	// [0,3,6],
+	// [1,4,7],
+	// [2,5,8],
+	// [10,13,16],
+	// [11,14,17],
+	// [12,15,18],
+	// [20,23,26],
+	// [21,24,27],
+	// [22,25,28],
+	// [06,16,26],
+	// [7,17,27],
+	// [8,18,28],
+	// [3,13,23],
+	// [4,14,24],
+	// [5,15,25],
+	// [0,10,20],
+	// [1,11,21],
+	// [2,12,22],
+	// [0,4,8],
+	// [2,4,6],
+	// [20,24,28],
+	// [22,24,26],
+	// [0,13,26],
+	// [6,13,20],
+	// [12,15,28],
+	// [8,15,22],
+	// [6,17,28],
+	// [8,17,26],
+	// [0,11,22],
+	// [2,11,20],
+	// [10,14,18],
+	// [12,14,16],
+	// [0,14,28],
+	// [2,14,26],
+	// [1,14,27],
+	// [3,14,25],
+	// [5,14,23],
+	// [7,14,21]
 ]
 
 
@@ -45,7 +84,7 @@ function displayRecord() {
 function restart() {
     document.querySelector('.endgame').classList.add('hidden')
     showModal(); 
-    origBoard = Array.from(Array(9).keys());
+    origBoard = Array.from(Array(27).keys());
 	for (var i = 0; i < cells.length; i++) {
 		cells[i].innerText = '';
 		cells[i].style.removeProperty('background-color');
@@ -55,8 +94,9 @@ function restart() {
 }
 
 function startGame() {
-    showModal(); 
-	origBoard = Array.from(Array(9).keys());
+	showModal(); 
+	console.log("startGame is working")
+	origBoard = Array.from(Array(27).keys());
 	for (var i = 0; i < cells.length; i++) {
 		cells[i].innerText = '';
 		cells[i].style.removeProperty('background-color');
@@ -67,7 +107,7 @@ function startGame() {
 
 function startAiGame() {
     showModal(); 
-	origBoard = Array.from(Array(9).keys());
+	origBoard = Array.from(Array(27).keys());
 	for (var i = 0; i < cells.length; i++) {
 		cells[i].innerText = '';
 		cells[i].style.removeProperty('background-color');
@@ -81,6 +121,7 @@ function turnClick(square) {
 	if (typeof origBoard[square.target.id] == 'number') {
 		turn(square.target.id, huPlayer)
 		if (!checkWin(origBoard, huPlayer) && !checkTie()) turn(bestSpot(), aiPlayer);
+		console.log("turnclick is working")
 	}
 }
 
@@ -96,8 +137,9 @@ function checkWin(board, player) {
 		(e === player) ? a.concat(i) : a, []);
 	let gameWon = null;
 	for (let [index, win] of winCombos.entries()) {
-		if (win.every(elem => plays.indexOf(elem) > -1)) {
-            gameWon = {index: index, player: player};
+		if (win.every(elem => plays.indexOf(elem) > -1)) {    //THIS IS WHAT IS BREAKING THE LOGIC// 
+			gameWon = {index: index, player: player};
+			console.log("The checkwin condition has fired")
 			break;
 		}
 	}
